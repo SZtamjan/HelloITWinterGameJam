@@ -5,32 +5,29 @@ using UnityEngine;
 
 public class EnemyMover : MonoBehaviour
 {
-    [SerializeField] private Transform destanationsTransform;
-
-    private List<Transform> destanations = new List<Transform>();
-
-    private void Start()
+    [SerializeField] private float enemySpeed = 1f;
+    private Vector3 destanation = new Vector3();
+    
+    public void PopulateDestanationAndGo(Vector3 newDestanation)
     {
-        Initialization();
+        destanation = newDestanation;
+        StartCoroutine(MoveTowardsDestanation());
     }
 
-    
-
-
-
-
-
-    private void Initialization()
+    private IEnumerator MoveTowardsDestanation()
     {
-        SetDestanations();
-    }
-    
-    private void SetDestanations() //This solution is format sensitive
-    {
-        foreach (Transform child in destanationsTransform)
+        while (transform.position != destanation)
         {
-            destanations.Add(child);
+            transform.position = Vector3.MoveTowards(transform.position,destanation,enemySpeed * Time.deltaTime);
+            yield return null;
         }
+
+        EnemyDie();
     }
-    
+
+    private void EnemyDie()
+    {
+        //ultra giga efekty i wgl xd
+        Destroy(gameObject);
+    }
 }

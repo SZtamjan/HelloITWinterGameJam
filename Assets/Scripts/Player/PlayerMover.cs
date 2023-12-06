@@ -19,7 +19,7 @@ public class PlayerMover : MonoBehaviour
         playerMovement.x = Input.GetAxisRaw("Horizontal");
         playerMovement.y = Input.GetAxisRaw("Vertical");
     }
-
+    
     private void FixedUpdate()
     {
         playerRB.velocity = new Vector2(50f * playerMovement.x * playerSpeed * Time.deltaTime, 50f * playerMovement.y * playerSpeed * Time.deltaTime);

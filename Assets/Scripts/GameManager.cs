@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    //Waves
+    [Header("Waves")] 
+    [SerializeField] private List<WaveStruct> waves;
+    private int waveToLoad = 0;
+    
+    
     private void Start()
     {
         ChangeGameState(GameState.Initialization);
@@ -16,13 +22,18 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Initialization:
                 InitializeSpawn();
-                ChangeStateTo(GameState.StartGame);
+                ChangeStateTo(GameState.LoadNextWave);
                 break;
-            case GameState.StartGame:
-                StartSpawningEnemies();
+            case GameState.LoadNextWave:
+                CheckIfThereIsNextWave();
                 break;
+            case GameState.StartWave:
+                 StartSpawningEnemies();
+                 break;
         }
     }
+
+    
 
     #region Initialize
 
@@ -34,7 +45,32 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region StartGame
+    #region LoadWave
+
+    private void CheckIfThereIsNextWave()
+    {
+        if (waveToLoad + 1 > waves.Count)
+        {
+            Debug.Log("Ran out of waves");
+        }
+        else
+        {
+            LoadNextWave();
+        }
+    }
+    
+    private void LoadNextWave()
+    {
+        GetComponent<EnemySpawner>().LoadWave(waves[waveToLoad]);
+        Debug.Log("Loaded " + waveToLoad);
+        waveToLoad++;
+        
+        ChangeStateTo(GameState.StartWave);
+    }
+
+    #endregion
+    
+    #region StartWave
 
     private void StartSpawningEnemies()
     {
@@ -43,7 +79,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    private void ChangeStateTo(GameState newState)
+    public void ChangeStateTo(GameState newState)
     {
         ChangeGameState(newState);
     }
@@ -53,6 +89,7 @@ public class GameManager : MonoBehaviour
 public enum GameState
 {
     Initialization,
-    StartGame,
+    LoadNextWave,
+    StartWave,
     EndGame
 }
