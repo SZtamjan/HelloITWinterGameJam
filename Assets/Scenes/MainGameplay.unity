@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 227566659}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -726,7 +726,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 3290783260695920143, guid: fd9ebdebedaf6da458d933d9d86648bc, type: 3}
+  bossPrefab: {fileID: 3038343116117477033, guid: 9ee3402492931ae4faed0a371188e120, type: 3}
   destanationsTransform: {fileID: 5207693100288081547, guid: 8c1cb673294cbf64a808db051c146c85, type: 3}
+  breakBetweenWaves: 1
+  amountOfEnemies: 0
+  spawnCooldown: 0
+  bossWave: 0
   amountOfEnemiesPerOneSpawn: 1
 --- !u!114 &576475753
 MonoBehaviour:
@@ -741,10 +746,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - amountOfEnemies: 5
+  - amountOfEnemies: 1
     spawnCooldown: 1
+    bossWave: 1
   - amountOfEnemies: 10
     spawnCooldown: 1
+    bossWave: 0
 --- !u!1 &1806665640
 GameObject:
   m_ObjectHideFlags: 0

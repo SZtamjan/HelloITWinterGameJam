@@ -8,4 +8,5 @@ public struct WaveStruct
 {
     public int amountOfEnemies;
     public int spawnCooldown;
+    public bool bossWave;
 }
