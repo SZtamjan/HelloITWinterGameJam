@@ -7,6 +7,6 @@ using UnityEngine;
 public struct WaveStruct
 {
     public int amountOfEnemies;
-    public int spawnCooldown;
+    public float spawnCooldown;
     public bool bossWave;
 }

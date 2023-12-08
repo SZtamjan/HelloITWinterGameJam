@@ -21,9 +21,10 @@ public class EnemySpawner : MonoBehaviour
     [Header("Waves")] 
     [Tooltip("In seconds")] [SerializeField] private float breakBetweenWaves = 1f;
     
-    [Header("Show for Debug purposes")]
+    [Header("")]
+    [Header("Shown for Debug purposes")]
     [SerializeField] private int amountOfEnemies;
-    [SerializeField] private int spawnCooldown;
+    [SerializeField] private float spawnCooldown;
     [SerializeField] private bool bossWave;
     
     [Tooltip("It can be easly implemented if needed")] 
