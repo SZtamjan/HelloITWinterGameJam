@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
@@ -9,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     //Enemies
     [Header("Enemies")]
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject bossPrefab;
     
     //Destanations
     [Header("Destanations")]
@@ -18,8 +20,11 @@ public class EnemySpawner : MonoBehaviour
     //Waves
     [Header("Waves")] 
     [Tooltip("In seconds")] [SerializeField] private float breakBetweenWaves = 1f;
+    
+    [Header("Show for Debug purposes")]
     [SerializeField] private int amountOfEnemies;
     [SerializeField] private int spawnCooldown;
+    [SerializeField] private bool bossWave;
     
     [Tooltip("It can be easly implemented if needed")] 
     [SerializeField] private int amountOfEnemiesPerOneSpawn = 1;
@@ -68,27 +73,63 @@ public class EnemySpawner : MonoBehaviour
     
     public IEnumerator SpawnEnemies()
     {
+        //vars initialization
         int spawnedAmountOfEnemies = 0;
+        int amountOfEnemiesLeft;
+        
+        //logic
+        
+        //spawn enemies
         while (amountOfEnemies > spawnedAmountOfEnemies)
         {
             Debug.Log(amountOfEnemies + " and " +spawnedAmountOfEnemies);
-            for (int i = 0; i < amountOfEnemiesPerOneSpawn; i++) //Not really implemented (It spawns x amount of enemies at once)
-            {
-                Vector2 newSpawnPoint = new Vector2(Random.Range(spawnHorizontalBounds.x, spawnHorizontalBounds.y),spawnHeight);
-                Transform newDestanation = destanations[Random.Range(0,destanations.Count)];
-                
-                GameObject newEnemy = Instantiate(enemyPrefab, newSpawnPoint, Quaternion.identity);
-                newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(newDestanation.position);
-            }
+            SpawnEnemy();
 
             spawnedAmountOfEnemies++;
             yield return new WaitForSeconds(spawnCooldown);
         }
+        
+        //spawn boss
+        SpawnBoss();
+        
+        //Hold wave until enemies die
+        do
+        {
+            GameObject[] objs = GameObject.FindGameObjectsWithTag("Enemy");
+            amountOfEnemiesLeft = objs.Length;
+            Debug.Log("Ilosc enemy: " + objs.Length);
 
+            yield return new WaitForSeconds(0.5f);
+
+        }while(amountOfEnemiesLeft != 0);
+        
         yield return new WaitForSeconds(breakBetweenWaves);
         ChangeGameState();
         
         yield return null;
+    }
+
+    private void SpawnBoss()
+    {
+        Vector2 newSpawnPoint = CalculateSpawnPosition();
+        Instantiate(bossPrefab, newSpawnPoint, Quaternion.identity);
+    }
+
+    private void SpawnEnemy()
+    {
+        for (int i = 0; i < amountOfEnemiesPerOneSpawn; i++) //Not really implemented (It spawns x amount of enemies at once)
+        {
+            Vector2 newSpawnPoint = CalculateSpawnPosition();
+            Transform newDestanation = destanations[Random.Range(0,destanations.Count)];
+                
+            GameObject newEnemy = Instantiate(enemyPrefab, newSpawnPoint, Quaternion.identity);
+            newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(newDestanation.position);
+        }
+    }
+
+    private Vector2 CalculateSpawnPosition()
+    {
+        return new Vector2(Random.Range(spawnHorizontalBounds.x, spawnHorizontalBounds.y),spawnHeight);
     }
 
     #endregion
@@ -102,6 +143,7 @@ public class EnemySpawner : MonoBehaviour
     {
         this.amountOfEnemies = newWaveInfo.amountOfEnemies;
         this.spawnCooldown = newWaveInfo.spawnCooldown;
+        this.bossWave = newWaveInfo.bossWave;
     }
     
 }

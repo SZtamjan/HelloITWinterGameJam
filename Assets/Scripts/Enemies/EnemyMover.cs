@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyMover : MonoBehaviour
 {
-    [SerializeField] private float enemySpeed = 1f;
+    [SerializeField] private EnemyStruct enemyStats;
     private Vector3 destanation = new Vector3();
     
     public void PopulateDestanationAndGo(Vector3 newDestanation)
@@ -18,7 +18,7 @@ public class EnemyMover : MonoBehaviour
     {
         while (transform.position != destanation)
         {
-            transform.position = Vector3.MoveTowards(transform.position,destanation,enemySpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position,destanation,enemyStats.moveSpeed * Time.deltaTime);
             yield return null;
         }
 
