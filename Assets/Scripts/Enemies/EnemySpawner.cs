@@ -150,14 +150,11 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < amountOfEnemiesPerOneSpawn; i++) //Not really implemented (It spawns x amount of enemies at once)
         {
-            
-                Vector2 newSpawnPoint = CalculateSpawnPosition();
-                Transform newDestanation = destanations[Random.Range(0,destanations.Count)];
+            Vector2 newSpawnPoint = CalculateSpawnPosition();
+            Transform newDestanation = destanations[Random.Range(0,destanations.Count)];
                 
-                GameObject newEnemy = Instantiate(enemyPrefab, newSpawnPoint, Quaternion.identity);
-                newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(newDestanation.position);
-            
-            
+            GameObject newEnemy = Instantiate(enemyPrefab, newSpawnPoint, Quaternion.identity);
+            newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(newDestanation.position);
         }
     }
     
