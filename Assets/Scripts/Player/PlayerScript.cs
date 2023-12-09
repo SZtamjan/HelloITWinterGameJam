@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private GameObject pointer;
 
     [SerializeField] private int hp = 3;
-    [SerializeField] private List<GameObject> Renifers;
+    [SerializeField] private List<GameObject> RenifersSpots;
+    [SerializeField] private GameObject reindeer;
 
     //Shooting
     private Coroutine shootCor;
@@ -59,8 +61,18 @@ public class PlayerScript : MonoBehaviour
     public void GetOneDmg()
     {
         hp--;
-        Destroy(Renifers[0]);
-        Renifers.Remove(Renifers[0]);
+
+        if (RenifersSpots[0].transform.childCount > 0)
+        {
+            Destroy(RenifersSpots[0].transform.GetChild(0).gameObject);
+        }else if (RenifersSpots[1].transform.childCount > 0)
+        {
+            Destroy(RenifersSpots[1].transform.GetChild(0).gameObject);
+        }else if (RenifersSpots[2].transform.childCount > 0)
+        {
+            Destroy(RenifersSpots[2].transform.GetChild(0).gameObject);
+        }
+
         if (hp <= 0)
         {
             Die();
@@ -72,6 +84,19 @@ public class PlayerScript : MonoBehaviour
         if (hp < 3)
         {
             hp++;
+            
+            if (RenifersSpots[2].transform.childCount == 0)
+            {
+                Instantiate(reindeer, RenifersSpots[2].transform);
+            }else if (RenifersSpots[1].transform.childCount == 0)
+            {
+                Instantiate(reindeer, RenifersSpots[1].transform);
+            }else if (RenifersSpots[0].transform.childCount == 0)
+            {
+                Instantiate(reindeer, RenifersSpots[0].transform);
+                Debug.Log("Player is Dead and this shouldn't even appear");
+            }
+            
         }
     }
     

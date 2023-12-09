@@ -91,8 +91,7 @@ public class EnemySpawner : MonoBehaviour
         //vars initialization
         int spawnedAmountOfEnemies = 0;
         int amountOfEnemiesLeft = 0;
-        int amountOfBossesLeft = 0;
-        
+
         //logic
         
         //spawn enemies

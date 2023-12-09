@@ -20,7 +20,6 @@ public class BossAI : MonoBehaviour
     
     [Header("Boss specials")]
     [Tooltip("Cooldown actually")] [SerializeField] private float maxShootSpeed = 1f;
-    [SerializeField] private float keepDistanceFromPlayer = 1f;
 
     private Vector2 leftPoint = new Vector2();
     private Vector2 rightPoint = new Vector2();
@@ -34,7 +33,6 @@ public class BossAI : MonoBehaviour
     private bool one, two, three;
 
     private float currentShootSpeed;
-    private Transform playerPos;
 
     void Start()
     {
@@ -76,8 +74,7 @@ public class BossAI : MonoBehaviour
     {
         leftPoint = Camera.main.ViewportToWorldPoint(new Vector2(0, 0.85f));
         rightPoint = Camera.main.ViewportToWorldPoint(new Vector2(1, 0.85f));
-            
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        
         currentShootSpeed = bossStats.startingShootSpeed;
         maxHP = bossStats.hp;
     }
@@ -128,8 +125,6 @@ public class BossAI : MonoBehaviour
 
             
         }
-
-        yield return null;
     }
 
     public void GetDmg(int dmg)
