@@ -19,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
     //Enemies
     [Header("Enemies")]
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject enemyTwoPrefab;
     [SerializeField] private GameObject bossPrefab;
     
     //Destanations
@@ -43,6 +44,7 @@ public class EnemySpawner : MonoBehaviour
     //Screen Bounds
     private Vector2 minBounds = new Vector2();
     private Vector2 maxBounds = new Vector2();
+    private Vector2 mid = new Vector2();
     
     //Spawn Area
     private float spawnHeight = 0f;
@@ -63,6 +65,7 @@ public class EnemySpawner : MonoBehaviour
         //bullet part
         minBounds = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         maxBounds = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+        mid = Camera.main.ViewportToWorldPoint(new Vector2(0.5f, 1));
     }
 
     private void InitSpawnArea()
@@ -147,11 +150,14 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < amountOfEnemiesPerOneSpawn; i++) //Not really implemented (It spawns x amount of enemies at once)
         {
-            Vector2 newSpawnPoint = CalculateSpawnPosition();
-            Transform newDestanation = destanations[Random.Range(0,destanations.Count)];
+            
+                Vector2 newSpawnPoint = CalculateSpawnPosition();
+                Transform newDestanation = destanations[Random.Range(0,destanations.Count)];
                 
-            GameObject newEnemy = Instantiate(enemyPrefab, newSpawnPoint, Quaternion.identity);
-            newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(newDestanation.position);
+                GameObject newEnemy = Instantiate(enemyPrefab, newSpawnPoint, Quaternion.identity);
+                newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(newDestanation.position);
+            
+            
         }
     }
     
@@ -168,11 +174,25 @@ public class EnemySpawner : MonoBehaviour
     {
         while (duringSpaceShooter)
         {
-            float xSpawnPos = Random.Range(spaceShooterHorizontalBounds.x, spaceShooterHorizontalBounds.y);
-            Vector2 newSpawnPos = new Vector2(xSpawnPos, spawnHeight);
-            GameObject newEnemy = Instantiate(enemyPrefab, newSpawnPos, Quaternion.identity);
-            Vector2 destanation = new Vector2(newEnemy.transform.position.x, newEnemy.transform.position.y - 20f);
-            newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(destanation);
+            int dwa = Random.Range(0, 2);
+            Debug.Log("lmfao " + dwa);
+
+            if (dwa==0)
+            {
+                float xSpawnPos = Random.Range(spaceShooterHorizontalBounds.x, spaceShooterHorizontalBounds.y);
+                Vector2 newSpawnPos = new Vector2(xSpawnPos, spawnHeight);
+                GameObject newEnemy = Instantiate(enemyPrefab, newSpawnPos, Quaternion.identity);
+                Vector2 destanation = new Vector2(newEnemy.transform.position.x, newEnemy.transform.position.y - 20f);
+                newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(destanation);
+            }
+            else
+            {
+                mid.y = mid.y + 2f;
+                Transform newDestanation = destanations[Random.Range(0,destanations.Count)];
+                
+                GameObject newEnemy = Instantiate(enemyTwoPrefab, mid, Quaternion.identity);
+                newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(newDestanation.position);
+            }
             
             yield return new WaitForSeconds(spaceShooterEnemySpawnCooldown);
         }

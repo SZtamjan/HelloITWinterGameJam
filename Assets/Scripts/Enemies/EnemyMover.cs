@@ -6,11 +6,16 @@ using Random = UnityEngine.Random;
 
 public class EnemyMover : MonoBehaviour
 {
+    [SerializeField] private bool betterEnemy;
     [SerializeField] private EnemyStruct enemyStats;
     [SerializeField] private GameObject heal;
     
     private Vector3 destanation = new Vector3();
-
+    [SerializeField] private Transform destanationOne;
+    [SerializeField] private Transform destanationTwo;
+    private Vector3 goThere = new Vector3();
+    private bool XD = false;
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -25,16 +30,59 @@ public class EnemyMover : MonoBehaviour
 
     public void PopulateDestanationAndGo(Vector2 newDestanation)
     {
-        destanation = newDestanation;
-        StartCoroutine(MoveTowardsDestanation());
+        if (betterEnemy)
+        {
+            destanation = newDestanation;
+            StartCoroutine(MoveTowardsDestanation());
+        }
+        else
+        {
+            destanation = newDestanation;
+            StartCoroutine(MoveTowardsDestanation());
+        }
+        
     }
 
     private IEnumerator MoveTowardsDestanation()
     {
+        float czas = 0f;
         while (transform.position != destanation)
         {
-            transform.position = Vector2.MoveTowards(transform.position,destanation,enemyStats.moveSpeed * Time.deltaTime);
-            if(transform.position.y < - 10f) EnemyDie();
+            if (betterEnemy)
+            {
+                if (XD)
+                {
+                    //goThere = destanationOne.transform.position;
+                    goThere = Vector3.Lerp(goThere, destanationOne.transform.position, 1f*Time.deltaTime);
+                }
+                else
+                {
+                    //goThere = destanationTwo.transform.position;
+                    goThere = Vector3.Lerp(goThere, destanationTwo.transform.position, 1f*Time.deltaTime);
+                }
+
+                if (czas > 2f)
+                {
+                    if (XD)
+                    {
+                        XD = false;
+                    }
+                    else
+                    {
+                        XD = true;
+                    }
+                
+                    czas = 0f;
+                }
+                transform.position = Vector2.MoveTowards(transform.position,goThere,enemyStats.moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = Vector2.MoveTowards(transform.position,destanation,enemyStats.moveSpeed * Time.deltaTime);
+                if(transform.position.y < - 10f) EnemyDie();
+            }
+
+            czas += Time.deltaTime;
             yield return null;
         }
 

@@ -1330,6 +1330,7 @@ MonoBehaviour:
   leftBound: {fileID: 183065979}
   rightBound: {fileID: 455226277}
   enemyPrefab: {fileID: 3290783260695920143, guid: fd9ebdebedaf6da458d933d9d86648bc, type: 3}
+  enemyTwoPrefab: {fileID: 8555150018099726377, guid: 02ab1dd2ee9b2494590690f4b3538c6b, type: 3}
   bossPrefab: {fileID: 3038343116117477033, guid: 9ee3402492931ae4faed0a371188e120, type: 3}
   destanationsTransform: {fileID: 5207693100288081547, guid: 8c1cb673294cbf64a808db051c146c85, type: 3}
   breakBetweenWaves: 1
