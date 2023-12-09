@@ -2,13 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private EnemyStruct enemyStats;
+    [SerializeField] private GameObject heal;
+    
     private Vector3 destanation = new Vector3();
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("WESZEDLEM W PLAYERA");
         if (other.gameObject.CompareTag("Player"))
@@ -42,6 +45,12 @@ public class EnemyMover : MonoBehaviour
 
     public void EnemyDie()
     {
+        int chance = Random.Range(0, 100);
+        if (chance > 80) //20% chance for heal
+        {
+            Instantiate(heal, transform.position, Quaternion.identity);
+        }        
+        
         //ultra giga efekty i wgl xd
         Destroy(gameObject);
     }

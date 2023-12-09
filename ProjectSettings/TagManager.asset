@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Boss
   - Laser
+  - Candy
   layers:
   - Default
   - TransparentFX

@@ -15,8 +15,7 @@ public class PlayerScript : MonoBehaviour
     
     //Shooting
     private Coroutine shootCor;
-
-
+    
     private void Start()
     {
         StartCoroutine(Shoot());
@@ -63,6 +62,14 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    public void HealPlayer()
+    {
+        if (hp < 3)
+        {
+            hp++;
+        }
+    }
+    
     public void Die()
     {
         Destroy(gameObject);
@@ -71,6 +78,10 @@ public class PlayerScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Laser"))
+        {
+            Die();
+        }
+        else if (other.gameObject.CompareTag("Candy"))
         {
             Die();
         }

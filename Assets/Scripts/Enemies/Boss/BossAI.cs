@@ -29,7 +29,7 @@ public class BossAI : MonoBehaviour
     private float xd = 0f;
     
     [Header("Boss Stages")] 
-    [Tooltip("Designer specifically for 3!!!")]
+    [Tooltip("Designed specifically for 3!!!")]
     [SerializeField] private List<BossStage> stages = new List<BossStage>();
     private bool one, two, three;
 
@@ -149,13 +149,13 @@ public class BossAI : MonoBehaviour
         currentShootSpeed = newShootingSpeed;
 
         //Boss Stages
-        if ((hpPercent < stages[2].activatesAtHP))
+        if ((hpPercent < stages[2].activatesAtHP+1f))
         {
             BossStageThree();
-        }else if ((hpPercent < stages[1].activatesAtHP))
+        }else if ((hpPercent < stages[1].activatesAtHP+1f))
         {
             BossStageTwo();
-        }else if ((hpPercent < stages[0].activatesAtHP))
+        }else if ((hpPercent < stages[0].activatesAtHP+1f))
         {
             BossStageOne();
         }

@@ -38,7 +38,7 @@ public class BulletScript : MonoBehaviour
             KillMe();
         }
         
-        KillMe();
+        
     }
 
 

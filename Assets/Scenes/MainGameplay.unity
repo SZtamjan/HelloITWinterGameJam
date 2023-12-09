@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 227566656}
   - component: {fileID: 227566660}
   - component: {fileID: 227566659}
+  - component: {fileID: 227566661}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -530,6 +531,51 @@ MonoBehaviour:
   - {fileID: 354531939}
   - {fileID: 44578428}
   - {fileID: 2005209015}
+--- !u!61 &227566661
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227566655}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0.64, y: 0.19999999, z: 0.24, w: 0.26999998}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &354531939 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6610773732247172404, guid: 558933017ff7d204d8c73fe897ca0422, type: 3}
@@ -851,7 +897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - amountOfEnemies: 1
+  - amountOfEnemies: 0
     spawnCooldown: 0.5
     bossWave: 0
   - amountOfEnemies: 1
