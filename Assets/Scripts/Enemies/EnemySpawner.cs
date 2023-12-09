@@ -7,6 +7,15 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
+    //SpaceShooter part
+    [Header("Space Shooter part")] 
+    [SerializeField] private float spaceShooterEnemySpawnCooldown = 1f;
+    public bool duringSpaceShooter = true;
+
+    [Header("SpawnBounds")] 
+    [SerializeField] private GameObject leftBound;
+    [SerializeField] private GameObject rightBound;
+        
     //Enemies
     [Header("Enemies")]
     [SerializeField] private GameObject enemyPrefab;
@@ -37,8 +46,7 @@ public class EnemySpawner : MonoBehaviour
     //Spawn Area
     private float spawnHeight = 0f;
     private Vector2 spawnHorizontalBounds = new Vector2();
-
-    public bool DBG = false;
+    private Vector2 spaceShooterHorizontalBounds = new Vector2();
 
     #region Initialization
 
@@ -51,12 +59,17 @@ public class EnemySpawner : MonoBehaviour
 
     private void InitScreenBounds()
     {
+        //bullet part
         minBounds = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         maxBounds = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
     }
 
     private void InitSpawnArea()
     {
+        //space shooter part
+        spaceShooterHorizontalBounds = new Vector2(leftBound.transform.position.x, rightBound.transform.position.x);
+        
+        //bullet part
         spawnHeight = maxBounds.y + 1f;
         spawnHorizontalBounds = new Vector2(minBounds.x, maxBounds.x);
     }
@@ -109,7 +122,7 @@ public class EnemySpawner : MonoBehaviour
         Debug.Log("XDDDD");
         
         yield return new WaitForSeconds(breakBetweenWaves);
-        ChangeGameState();
+        LoadNextWave();
         
         yield return null;
     }
@@ -131,15 +144,33 @@ public class EnemySpawner : MonoBehaviour
             newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(newDestanation.position);
         }
     }
-
+    
     private Vector2 CalculateSpawnPosition()
     {
         return new Vector2(Random.Range(spawnHorizontalBounds.x, spawnHorizontalBounds.y),spawnHeight);
     }
+    
+    #endregion
+
+    #region OnStartSpaceShooter
+
+    public IEnumerator SpaceShooterStartSpawnEnemies()
+    {
+        while (duringSpaceShooter)
+        {
+            float xSpawnPos = Random.Range(spaceShooterHorizontalBounds.x, spaceShooterHorizontalBounds.y);
+            Vector2 newSpawnPos = new Vector2(xSpawnPos, spawnHeight);
+            GameObject newEnemy = Instantiate(enemyPrefab, newSpawnPos, Quaternion.identity);
+            Vector2 destanation = new Vector2(newEnemy.transform.position.x, newEnemy.transform.position.y - 20f);
+            newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(destanation);
+            
+            yield return new WaitForSeconds(spaceShooterEnemySpawnCooldown);
+        }
+    }
 
     #endregion
 
-    private void ChangeGameState()
+    private void LoadNextWave()
     {
         GetComponent<GameManager>().ChangeStateTo(GameState.LoadNextWave);
     }

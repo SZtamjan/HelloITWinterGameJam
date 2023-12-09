@@ -12,21 +12,26 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] private int hp = 3;
     [SerializeField] private List<GameObject> Renifers;
-    
+
     //Shooting
     private Coroutine shootCor;
-    
+    private float czas = 0f;
+    [SerializeField] private float playerGunCoolDown = 1f;
+
     private void Start()
     {
-        StartCoroutine(Shoot());
+        //StartCoroutine(Shoot());
     }
 
     private void Update()
     {
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     if(shootCor == null) shootCor = StartCoroutine(Shoot());
-        // }
+        czas += Time.deltaTime;
+        if (Input.GetMouseButton(0) && czas > playerGunCoolDown)
+        {
+            GameObject blt = Instantiate(bullet, transform.position, transform.rotation);
+            blt.GetComponent<Rigidbody2D>().AddForce(transform.up * 50f,ForceMode2D.Force);
+            czas = 0f;
+        }
     }
     
     private void FixedUpdate()

@@ -13,9 +13,9 @@ public class EnemyMover : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("WESZEDLEM W PLAYERA");
         if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("WESZEDLEM W PLAYERA");
             other.gameObject.GetComponent<PlayerScript>().GetOneDmg();
             EnemyDie();
         }
@@ -23,7 +23,7 @@ public class EnemyMover : MonoBehaviour
 
     #region EnemyMovement
 
-    public void PopulateDestanationAndGo(Vector3 newDestanation)
+    public void PopulateDestanationAndGo(Vector2 newDestanation)
     {
         destanation = newDestanation;
         StartCoroutine(MoveTowardsDestanation());

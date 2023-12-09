@@ -7,13 +7,33 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     //Vars
+    private GameObject _playerObj;
     private UIController _uiController;
+
+    [Header("SpaceShooter part")]
+    [SerializeField] private int endSpaceShooterAtPoints = 10;
+    
+    //dynamic vars
+    private bool spaceShooterMode = true;
     
     //Score
-    public int points
+    private int points;
+    public int pointsProperty
     {
-        get;
-        private set;
+        get
+        {
+            return points;
+        }
+        private set
+        {
+            points = value;
+            if (points >= endSpaceShooterAtPoints && spaceShooterMode)
+            {
+                ChangeStateTo(GameState.ChangeGameType);
+                
+                spaceShooterMode = false;
+            }
+        }
     }
     
     
@@ -41,7 +61,16 @@ public class GameManager : MonoBehaviour
                 InitializeSpawn();
                 InitScore();
                 SetUpScore();
-                ChangeStateTo(GameState.LoadNextWave);
+                //ChangeStateTo(GameState.LoadNextWave);
+                ChangeStateTo(GameState.SpaceShooter);
+                break;
+            case GameState.SpaceShooter:
+                SpaceShooterStartSpawningEnemies();
+                break;
+            case GameState.ChangeGameType:
+                ChangePlayerMovement();
+                ChangeSpawnBehavior();
+                ChangeBackground(); //When this one is done it activates LoadNextWave
                 break;
             case GameState.LoadNextWave:
                 CheckIfThereIsNextWave();
@@ -59,13 +88,14 @@ public class GameManager : MonoBehaviour
     //Vars
     private void InitVars()
     {
+        _playerObj = GameObject.FindGameObjectWithTag("Player");
         _uiController = UIController.Instance;
     }
     
     //Score
     private void InitScore()
     {
-        points = 0;
+        pointsProperty = 0;
     }
     
     //Spawn Script
@@ -82,6 +112,34 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region StartSpaceShooter
+
+    private void SpaceShooterStartSpawningEnemies()
+    {
+        StartCoroutine(GetComponent<EnemySpawner>().SpaceShooterStartSpawnEnemies());
+    }
+
+    #endregion
+
+    #region ChangeGameType
+
+    private void ChangePlayerMovement()
+    {
+        _playerObj.GetComponent<PlayerMover>().spaceShooterMovement = false;
+    }
+
+    private void ChangeSpawnBehavior()
+    {
+        GetComponent<EnemySpawner>().duringSpaceShooter = false;
+    }
+
+    private void ChangeBackground()
+    {
+        StartCoroutine(GetComponent<BackGroundHandler>().RotateBackground());
+    }
+
+    #endregion
+    
     #region LoadWave
 
     private void CheckIfThereIsNextWave()
@@ -118,12 +176,12 @@ public class GameManager : MonoBehaviour
 
     public void AddPoint()
     {
-        points++;
+        pointsProperty++;
     }
 
     public void AddPoints(int value)
     {
-        points += value;
+        pointsProperty += value;
         _uiController.UpdateScore(points);
     }
 
@@ -137,6 +195,8 @@ public class GameManager : MonoBehaviour
 public enum GameState
 {
     Initialization,
+    SpaceShooter,
+    ChangeGameType,
     LoadNextWave,
     StartWave,
     EndGame
