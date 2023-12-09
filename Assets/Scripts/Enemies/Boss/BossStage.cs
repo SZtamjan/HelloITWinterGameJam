@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public struct BossStage
 {
-    public int activatesAt;
-    public float shootsFaster;
+    public float activatesAtHP;
+    public float shortenShootSpeedBy;
     [Tooltip("DO NOT TOUCH")] public bool activated;
 }

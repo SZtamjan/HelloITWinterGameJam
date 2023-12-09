@@ -38,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
     private float spawnHeight = 0f;
     private Vector2 spawnHorizontalBounds = new Vector2();
 
+    public bool DBG = false;
 
     #region Initialization
 
@@ -76,14 +77,15 @@ public class EnemySpawner : MonoBehaviour
     {
         //vars initialization
         int spawnedAmountOfEnemies = 0;
-        int amountOfEnemiesLeft;
+        int amountOfEnemiesLeft = 0;
+        int amountOfBossesLeft = 0;
         
         //logic
         
         //spawn enemies
         while (amountOfEnemies > spawnedAmountOfEnemies)
         {
-            Debug.Log(amountOfEnemies + " and " +spawnedAmountOfEnemies);
+            //Debug.Log(amountOfEnemies + " and " +spawnedAmountOfEnemies);
             SpawnEnemy();
 
             spawnedAmountOfEnemies++;
@@ -91,18 +93,20 @@ public class EnemySpawner : MonoBehaviour
         }
         
         //spawn boss
-        SpawnBoss();
-        
+        if(bossWave) SpawnBoss();
+
         //Hold wave until enemies die
         do
         {
-            GameObject[] objs = GameObject.FindGameObjectsWithTag("Enemy");
-            amountOfEnemiesLeft = objs.Length;
-            Debug.Log("Ilosc enemy: " + objs.Length);
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            amountOfEnemiesLeft = enemies.Length;
+            //Debug.Log("Ilosc enemy: " + objs.Length);
 
             yield return new WaitForSeconds(0.5f);
 
         }while(amountOfEnemiesLeft != 0);
+        
+        Debug.Log("XDDDD");
         
         yield return new WaitForSeconds(breakBetweenWaves);
         ChangeGameState();

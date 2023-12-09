@@ -5,12 +5,28 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+    //Vars
+    private UIController _uiController;
+    
+    //Score
+    public int points
+    {
+        get;
+        private set;
+    }
+    
+    
     //Waves
     [Header("Waves")] 
     [SerializeField] private List<WaveStruct> waves;
     private int waveToLoad = 0;
-    
-    
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         ChangeGameState(GameState.Initialization);
@@ -21,7 +37,10 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameState.Initialization:
+                InitVars();
                 InitializeSpawn();
+                InitScore();
+                SetUpScore();
                 ChangeStateTo(GameState.LoadNextWave);
                 break;
             case GameState.LoadNextWave:
@@ -37,10 +56,28 @@ public class GameManager : MonoBehaviour
 
     #region Initialize
 
+    //Vars
+    private void InitVars()
+    {
+        _uiController = UIController.Instance;
+    }
+    
+    //Score
+    private void InitScore()
+    {
+        points = 0;
+    }
+    
     //Spawn Script
     private void InitializeSpawn()
     {
         GetComponent<EnemySpawner>().Initialize();
+    }
+    
+    //Set ups
+    private void SetUpScore()
+    {
+        _uiController.UpdateScore(points);
     }
 
     #endregion
@@ -78,6 +115,17 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    public void AddPoint()
+    {
+        points++;
+    }
+
+    public void AddPoints(int value)
+    {
+        points += value;
+        _uiController.UpdateScore(points);
+    }
 
     public void ChangeStateTo(GameState newState)
     {
