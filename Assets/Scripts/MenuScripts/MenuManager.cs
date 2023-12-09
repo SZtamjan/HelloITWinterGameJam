@@ -9,6 +9,12 @@ public class MenuManager : MonoBehaviour
     private float currentCheck = 0;
     [SerializeField] private List<GameObject> buttons = new List<GameObject>();
 
+    private void Start()
+    {
+        ClearAnims();
+        PlayAnim();
+    }
+
     private void Update()
     {
         
@@ -18,6 +24,8 @@ public class MenuManager : MonoBehaviour
             currentCheck -= dwa;
             currentCheck = Mathf.Clamp(currentCheck,0,3);
             Debug.Log(currentCheck);
+            
+            PlayAnim();
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
@@ -55,6 +63,22 @@ public class MenuManager : MonoBehaviour
     private void ExitGame()
     {
         
+    }
+
+
+    private void PlayAnim()
+    {
+        ClearAnims();
+        
+        buttons[(int)currentCheck].transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    private void ClearAnims()
+    {
+        buttons[0].transform.GetChild(0).gameObject.SetActive(false);
+        buttons[1].transform.GetChild(0).gameObject.SetActive(false);
+        buttons[2].transform.GetChild(0).gameObject.SetActive(false);
+        buttons[3].transform.GetChild(0).gameObject.SetActive(false);
     }
     
 }
