@@ -102,12 +102,17 @@ public class BossAI : MonoBehaviour
                 yield return new WaitForSeconds(currentShootSpeed);
             }else if (three)
             {
-                //lasery i wgl
                 if (xd > 2f)
+                {
+                    Instantiate(candy, shootingSpotMid.transform.position, Quaternion.identity);
+                    xd = 0f;
+                }
+                //lasery i wgl
+                if (xd > 0.5f)
                 {
                     forceStop = true;
                     laser.SetActive(true);
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.2f);
                     forceStop = false;
                     laser.SetActive(false);
                 }
@@ -186,6 +191,8 @@ public class BossAI : MonoBehaviour
 
     private void Die()
     {
+        GameManager.Instance.ChangeStateTo(GameState.EndGame);
+        
         GameManager.Instance.AddPoints(1000);
         Destroy(gameObject);
     }

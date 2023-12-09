@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,12 +10,19 @@ public class GameManager : MonoBehaviour
     //Vars
     private GameObject _playerObj;
     private UIController _uiController;
-
+    [SerializeField] private GameEvent deathEvent;
+    
     [Header("SpaceShooter part")]
-    [SerializeField] private int endSpaceShooterAtPoints = 10;
+    [SerializeField] private int endSpaceShooterAfterRoad = 10;
     
     //dynamic vars
     private bool spaceShooterMode = true;
+    private bool upgradeOne, upgradeTwo, upgradeThree;
+
+    [Header("Player Upgrades")] 
+    [SerializeField] private int unLockFirstAt = 0;
+    [SerializeField] private int unLockSecondAt = 0;
+    [SerializeField] private int unLockThreeAt = 0;
     
     //Score
     private int points;
@@ -27,11 +35,19 @@ public class GameManager : MonoBehaviour
         private set
         {
             points = value;
-            if (points >= endSpaceShooterAtPoints && spaceShooterMode)
+            
+            if (points >= unLockThreeAt && !upgradeThree)
             {
-                ChangeStateTo(GameState.ChangeGameType);
-                
-                spaceShooterMode = false;
+                _playerObj.GetComponent<PlayerScript>().UpgradeLvlProp = 3;
+                upgradeThree = true;
+            }else if (points >= unLockSecondAt && !upgradeTwo)
+            {
+                _playerObj.GetComponent<PlayerScript>().UpgradeLvlProp = 2;
+                upgradeTwo = true;
+            }else if (points >= unLockFirstAt && !upgradeOne)
+            {
+                _playerObj.GetComponent<PlayerScript>().UpgradeLvlProp = 1;
+                upgradeOne = true;
             }
         }
     }
@@ -60,12 +76,13 @@ public class GameManager : MonoBehaviour
                 InitVars();
                 InitializeSpawn();
                 InitScore();
-                SetUpScore();
+                SetUpUI();
                 //ChangeStateTo(GameState.LoadNextWave);
                 ChangeStateTo(GameState.SpaceShooter);
                 break;
             case GameState.SpaceShooter:
                 SpaceShooterStartSpawningEnemies();
+                CheckIfRoadComplete();
                 break;
             case GameState.ChangeGameType:
                 ChangePlayerMovement();
@@ -76,12 +93,14 @@ public class GameManager : MonoBehaviour
                 CheckIfThereIsNextWave();
                 break;
             case GameState.StartWave:
-                 StartSpawningEnemies();
-                 break;
+                StartSpawningEnemies();
+                break;
+            case GameState.EndGame:
+                StopEverything();
+                ShowDeathScreen();
+                break;
         }
     }
-
-    
 
     #region Initialize
 
@@ -105,9 +124,10 @@ public class GameManager : MonoBehaviour
     }
     
     //Set ups
-    private void SetUpScore()
+    private void SetUpUI()
     {
         _uiController.UpdateScore(points);
+        _uiController.UpdateDistance(endSpaceShooterAfterRoad);
     }
 
     #endregion
@@ -117,6 +137,28 @@ public class GameManager : MonoBehaviour
     private void SpaceShooterStartSpawningEnemies()
     {
         StartCoroutine(GetComponent<EnemySpawner>().SpaceShooterStartSpawnEnemies());
+    }
+
+    private void CheckIfRoadComplete()
+    {
+        StartCoroutine(SSRoad());
+    }
+
+    private IEnumerator SSRoad()
+    {
+        while (spaceShooterMode)
+        {
+            endSpaceShooterAfterRoad -= 2;
+            _uiController.UpdateDistance(endSpaceShooterAfterRoad);
+            yield return new WaitForSeconds(1f);
+
+            if (endSpaceShooterAfterRoad <= 0)
+            {
+                ChangeStateTo(GameState.ChangeGameType);
+                
+                spaceShooterMode = false;
+            }
+        }
     }
 
     #endregion
@@ -169,11 +211,22 @@ public class GameManager : MonoBehaviour
 
     private void StartSpawningEnemies()
     {
-        StartCoroutine(GetComponent<EnemySpawner>().SpawnEnemies());
+        //StartCoroutine(GetComponent<EnemySpawner>().SpawnEnemies());
+        GetComponent<EnemySpawner>().StartEnemySpawn();
     }
 
     #endregion
+    
+    private void StopEverything()
+    {
+        deathEvent.Raise();
+    }
 
+    public void ShowDeathScreen()
+    {
+        _uiController.ShowInGameMenu();
+    }
+    
     public void AddPoint()
     {
         pointsProperty++;

@@ -6,9 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField] private AudioManager _audioManager;
+    
     private float currentCheck = 0;
     [SerializeField] private List<GameObject> buttons = new List<GameObject>();
 
+    private bool allowChangeMusic = false;
+    
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject settings;
+    [SerializeField] private GameObject extras;
+    
     private void Start()
     {
         ClearAnims();
@@ -23,9 +31,15 @@ public class MenuManager : MonoBehaviour
             float dwa = Input.GetAxisRaw("Vertical");
             currentCheck -= dwa;
             currentCheck = Mathf.Clamp(currentCheck,0,3);
-            Debug.Log(currentCheck);
             
             PlayAnim();
+            Debug.Log(currentCheck);
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            BackToMenu();
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
@@ -39,6 +53,7 @@ public class MenuManager : MonoBehaviour
                     OpenSettings();
                     break;
                 case 2:
+                    OpenExtras();
                     Debug.Log("co to extras");
                     break;
                 case 3:
@@ -46,6 +61,14 @@ public class MenuManager : MonoBehaviour
                     break;
             }
         }
+
+        if (Input.GetButtonDown("Horizontal"))
+        {
+            float dwa = Input.GetAxisRaw("Vertical");
+            if (dwa > 0) _audioManager.ChangeSliderValue(+0.1f);
+            if (dwa < 0) _audioManager.ChangeSliderValue(-0.1f);
+        }
+        
     }
     
     private void NewGame()
@@ -57,14 +80,30 @@ public class MenuManager : MonoBehaviour
 
     private void OpenSettings()
     {
-        
+        settings.SetActive(true);
+        mainMenu.SetActive(false);
+    }
+
+    private void OpenExtras()
+    {
+        mainMenu.SetActive(false);
+        extras.SetActive(true);
     }
 
     private void ExitGame()
     {
-        
+        Application.Quit();
     }
 
+    private void BackToMenu()
+    {
+        //wylacza:
+        settings.SetActive(false);
+        extras.SetActive(false);
+        
+        //wlacza:
+        mainMenu.SetActive(true);
+    }
 
     private void PlayAnim()
     {

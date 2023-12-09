@@ -35,6 +35,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int amountOfEnemies;
     [SerializeField] private float spawnCooldown;
     [SerializeField] private bool bossWave;
+    private Coroutine enemySpawnerCor;
     
     [Tooltip("It can be easly implemented if needed")] 
     [SerializeField] private int amountOfEnemiesPerOneSpawn = 1;
@@ -85,6 +86,11 @@ public class EnemySpawner : MonoBehaviour
     #endregion
 
     #region OnStartGame
+
+    public void StartEnemySpawn()
+    {
+        enemySpawnerCor = StartCoroutine(SpawnEnemies());
+    }
     
     public IEnumerator SpawnEnemies()
     {
@@ -124,6 +130,11 @@ public class EnemySpawner : MonoBehaviour
         LoadNextWave();
         
         yield return null;
+    }
+
+    public void StopSpawning()
+    {
+        if(enemySpawnerCor != null) StopCoroutine(enemySpawnerCor);
     }
 
     private void SpawnBoss()

@@ -16,13 +16,28 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private GameObject reindeer;
 
     //Shooting
+    [Header("Shooting")] 
+    [SerializeField] private GameObject bulletSpotOne;
+    [SerializeField] private GameObject bulletSpotTwo;
+    [SerializeField] private GameObject bulletSpotThree;
     private Coroutine shootCor;
     private float czas = 0f;
     [SerializeField] private float playerGunCoolDown = 1f;
+    private float basePlayerGunCoolDown = 1f;
+    private int upgradeLvl = 0; //0 is default
+    private bool cooldownCut = false;
+
+    public int UpgradeLvlProp
+    {
+        set
+        {
+            upgradeLvl = value;
+        }
+    }
 
     private void Start()
     {
-        //StartCoroutine(Shoot());
+        basePlayerGunCoolDown = playerGunCoolDown;
     }
 
     private void Update()
@@ -30,10 +45,56 @@ public class PlayerScript : MonoBehaviour
         czas += Time.deltaTime;
         if (Input.GetMouseButton(0) && czas > playerGunCoolDown)
         {
-            GameObject blt = Instantiate(bullet, transform.position, transform.rotation);
-            blt.GetComponent<Rigidbody2D>().AddForce(transform.up * 50f,ForceMode2D.Force);
+            if (upgradeLvl == 0)
+            {
+                Debug.Log("Upgrade default");
+                playerGunCoolDown = basePlayerGunCoolDown;
+                ShootFromSpotOne();
+            }
+            else if (upgradeLvl == 1)
+            {
+                Debug.Log("Upgrade 1");
+                playerGunCoolDown = basePlayerGunCoolDown;
+                ShootFromSpotOne();
+                ShootFromSpotTwo();
+            }
+            else if (upgradeLvl == 2)
+            {
+                Debug.Log("Upgrade 2");
+                playerGunCoolDown = basePlayerGunCoolDown;
+                ShootFromSpotOne();
+                ShootFromSpotTwo();
+                ShootFromSpotThree();
+            }
+            else if (upgradeLvl == 3)
+            {
+                playerGunCoolDown = basePlayerGunCoolDown / 1.5f;
+
+                ShootFromSpotOne();
+                ShootFromSpotTwo();
+                ShootFromSpotThree();
+            }
+            
             czas = 0f;
         }
+    }
+
+    private void ShootFromSpotOne()
+    {
+        GameObject blt = Instantiate(bullet, bulletSpotOne.transform.position, transform.rotation);
+        blt.GetComponent<Rigidbody2D>().AddForce(transform.up * 50f,ForceMode2D.Force);
+    }
+
+    private void ShootFromSpotTwo()
+    {
+        GameObject blt = Instantiate(bullet, bulletSpotTwo.transform.position, transform.rotation);
+        blt.GetComponent<Rigidbody2D>().AddForce(transform.up * 50f,ForceMode2D.Force);
+    }
+    
+    private void ShootFromSpotThree()
+    {
+        GameObject blt = Instantiate(bullet, bulletSpotThree.transform.position, transform.rotation);
+        blt.GetComponent<Rigidbody2D>().AddForce(transform.up * 50f,ForceMode2D.Force);
     }
     
     private void FixedUpdate()
@@ -47,7 +108,7 @@ public class PlayerScript : MonoBehaviour
         transform.up = dir;
     }
 
-    private IEnumerator Shoot()
+    private IEnumerator Shoot() //Not in use anymore
     {
         while (true)
         {
@@ -102,6 +163,8 @@ public class PlayerScript : MonoBehaviour
     
     public void Die()
     {
+        GameManager.Instance.ChangeStateTo(GameState.EndGame);
+        
         Destroy(gameObject);
     }
 

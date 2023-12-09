@@ -13,13 +13,10 @@ public class PlayerMover : MonoBehaviour
     
     private Vector2 leftPoint = new Vector2();
     private Vector2 rightPoint = new Vector2();
-    
-    
-    
 
     private void Start()
     {
-        leftPoint = Camera.main.ViewportToWorldPoint(new Vector2(0, 0.75f));
+        leftPoint = Camera.main.ViewportToWorldPoint(new Vector2(0, 0.65f));
         rightPoint = Camera.main.ViewportToWorldPoint(new Vector2(1, 0f));
         playerRB = GetComponent<Rigidbody2D>();
     }

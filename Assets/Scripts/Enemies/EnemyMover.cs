@@ -46,7 +46,7 @@ public class EnemyMover : MonoBehaviour
     public void EnemyDie()
     {
         int chance = Random.Range(0, 100);
-        if (chance > 50) //20% chance for heal
+        if (chance > 80) //20% chance for heal
         {
             Instantiate(heal, transform.position, Quaternion.identity);
         }        

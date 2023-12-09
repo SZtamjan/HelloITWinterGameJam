@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    [SerializeField] private float maxDistance = 5f;
+    [SerializeField] private float maxDistance = 15f;
 
     private Vector3 startPos = new Vector3();
 
