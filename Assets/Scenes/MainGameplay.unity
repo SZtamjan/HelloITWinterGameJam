@@ -1478,7 +1478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winScreen: {fileID: 131224256}
   deathEvent: {fileID: 11400000, guid: 1da3513d862780746b671a7ddbda4477, type: 2}
-  endSpaceShooterAfterRoad: 10
+  endSpaceShooterAfterRoad: 50
   unLockFirstAt: 10
   unLockSecondAt: 30
   unLockThreeAt: 60
