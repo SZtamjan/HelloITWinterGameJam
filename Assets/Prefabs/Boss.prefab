@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossStats:
-    hp: 100
+    hp: 200
     moveSpeed: 3
     startingShootSpeed: 2
   snowBall: {fileID: 4446101947282569435, guid: 28c4f6d7e6c2d934fb5d47f06d48357c, type: 3}
@@ -66,10 +66,10 @@ MonoBehaviour:
   - activatesAtHP: 80
     shortenShootSpeedBy: 0
     activated: 0
-  - activatesAtHP: 50
+  - activatesAtHP: 60
     shortenShootSpeedBy: 0
     activated: 0
-  - activatesAtHP: 20
+  - activatesAtHP: 30
     shortenShootSpeedBy: 0
     activated: 0
 --- !u!212 &4701500215776250313
