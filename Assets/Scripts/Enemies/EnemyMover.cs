@@ -33,6 +33,8 @@ public class EnemyMover : MonoBehaviour
         if (betterEnemy)
         {
             destanation = newDestanation;
+            goThere = destanationOne.position;
+            enemyStats.moveSpeed = enemyStats.moveSpeed * 6f;
             StartCoroutine(MoveTowardsDestanation());
         }
         else
@@ -50,30 +52,32 @@ public class EnemyMover : MonoBehaviour
         {
             if (betterEnemy)
             {
-                if (XD)
-                {
-                    //goThere = destanationOne.transform.position;
-                    goThere = Vector3.Lerp(goThere, destanationOne.transform.position, 1f*Time.deltaTime);
-                }
-                else
-                {
-                    //goThere = destanationTwo.transform.position;
-                    goThere = Vector3.Lerp(goThere, destanationTwo.transform.position, 1f*Time.deltaTime);
-                }
-
-                if (czas > 2f)
-                {
-                    if (XD)
-                    {
-                        XD = false;
-                    }
-                    else
-                    {
-                        XD = true;
-                    }
+                // if (XD)
+                // {
+                //     //goThere = destanationOne.transform.position;
+                //     goThere = Vector3.Lerp(goThere, destanationOne.transform.position, 1f*Time.deltaTime);
+                // }
+                // else
+                // {
+                //     //goThere = destanationTwo.transform.position;
+                //     goThere = Vector3.Lerp(goThere, destanationTwo.transform.position, 1f*Time.deltaTime);
+                // }
+                //
+                // if (czas > 2f)
+                // {
+                //     if (XD)
+                //     {
+                //         XD = false;
+                //     }
+                //     else
+                //     {
+                //         XD = true;
+                //     }
+                //
+                //     czas = 0f;
+                // }
                 
-                    czas = 0f;
-                }
+                goThere = destanationOne.position;
                 transform.position = Vector2.MoveTowards(transform.position,goThere,enemyStats.moveSpeed * Time.deltaTime);
             }
             else

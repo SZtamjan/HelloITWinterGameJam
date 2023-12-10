@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossStats:
-    hp: 100
+    hp: 150
     moveSpeed: 3
     startingShootSpeed: 2
   snowBall: {fileID: 4446101947282569435, guid: 28c4f6d7e6c2d934fb5d47f06d48357c, type: 3}
@@ -61,6 +61,7 @@ MonoBehaviour:
   shootingSpotMid: {fileID: 9050797852838831401}
   shootingSpotLeft: {fileID: 8167023248677448889}
   shootingSpotRight: {fileID: 4811813192084707237}
+  heal: {fileID: 706689911157289018, guid: 2d96bd4ed675d8b4b8769f223644a0f3, type: 3}
   maxShootSpeed: 1
   stages:
   - activatesAtHP: 80

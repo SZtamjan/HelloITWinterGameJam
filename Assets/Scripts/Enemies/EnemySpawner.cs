@@ -185,9 +185,11 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
+                float xSpawnPos = Random.Range(spaceShooterHorizontalBounds.x, spaceShooterHorizontalBounds.y);
+                Vector2 newSpawnPos = new Vector2(xSpawnPos, spawnHeight);
                 Transform newDestanation = destanations[Random.Range(0,destanations.Count)];
                 
-                GameObject newEnemy = Instantiate(enemyTwoPrefab, mid, Quaternion.identity);
+                GameObject newEnemy = Instantiate(enemyTwoPrefab, newSpawnPos, Quaternion.identity);
                 newEnemy.GetComponent<EnemyMover>().PopulateDestanationAndGo(newDestanation.position);
             }
             

@@ -172,11 +172,12 @@ public class PlayerScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Laser"))
         {
-            Die();
+            GetOneDmg();
         }
         else if (other.gameObject.CompareTag("Candy"))
         {
-            Die();
+            GetOneDmg();
+            GetOneDmg();
         }
     }
 }

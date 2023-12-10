@@ -17,8 +17,9 @@ public class BossAI : MonoBehaviour
     [SerializeField] private GameObject shootingSpotMid;
     [SerializeField] private GameObject shootingSpotLeft;
     [SerializeField] private GameObject shootingSpotRight;
-    
-    [Header("Boss specials")]
+
+    [Header("Boss specials")] [SerializeField]
+    private GameObject heal;
     [Tooltip("Cooldown actually")] [SerializeField] private float maxShootSpeed = 1f;
 
     private Vector2 leftPoint = new Vector2();
@@ -26,6 +27,7 @@ public class BossAI : MonoBehaviour
     private bool movingLeft = true;
     private bool forceStop = false;
     private float xd = 0f;
+    private float lol = 0f;
     
     [Header("Boss Stages")] 
     [Tooltip("Designed specifically for 3!!!")]
@@ -38,11 +40,24 @@ public class BossAI : MonoBehaviour
     {
         Initialize();
         StartCoroutine(StartShooting());
+        StartCoroutine(StartDroppingHeals());
     }
 
+    private IEnumerator StartDroppingHeals()
+    {
+        Vector2 pos = transform.position;
+        pos.y = pos.y + 4f;
+        while (true)
+        {
+            Instantiate(heal, pos, Quaternion.identity);
+            yield return new WaitForSeconds(10f);
+        }
+    }
+    
     private void Update()
     {
         xd += Time.deltaTime;
+        lol += Time.deltaTime;
         if (!forceStop)
         {
             if (movingLeft)
@@ -79,15 +94,16 @@ public class BossAI : MonoBehaviour
         maxHP = bossStats.hp;
     }
 
+
+    private Coroutine dwadwa;
     private IEnumerator StartShooting()
     {
         while (true)
         {
             if (one)
             {
-                Instantiate(snowBall, shootingSpotLeft.transform.position, Quaternion.identity);
-                Instantiate(snowBall, shootingSpotRight.transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(currentShootSpeed);
+                if (dwadwa == null) dwadwa = StartCoroutine(BasicGo());
+                yield return null;
             }else if (two)
             {
                 Debug.Log("XDDDXDXDXDXD" + xd);
@@ -96,31 +112,27 @@ public class BossAI : MonoBehaviour
                     Instantiate(candy, shootingSpotMid.transform.position, Quaternion.identity);
                     xd = 0f;
                 }
-
-                Instantiate(snowBall, shootingSpotLeft.transform.position, Quaternion.identity);
-                Instantiate(snowBall, shootingSpotRight.transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(currentShootSpeed);
+                yield return null;
+                
             }else if (three)
             {
-                if (xd > 2f)
+                if (xd > 3.5f)
                 {
                     Instantiate(candy, shootingSpotMid.transform.position, Quaternion.identity);
                     xd = 0f;
                 }
                 //lasery i wgl
-                if (xd > 0.5f)
+                if (lol > 0.8f)
                 {
                     forceStop = true;
                     laser.SetActive(true);
                     yield return new WaitForSeconds(0.2f);
                     forceStop = false;
                     laser.SetActive(false);
+                    lol = 0f;
                 }
+                yield return null;
                 
-
-                Instantiate(snowBall, shootingSpotLeft.transform.position, Quaternion.identity);
-                Instantiate(snowBall, shootingSpotRight.transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(currentShootSpeed);
             }
             else //default
             {
@@ -128,7 +140,17 @@ public class BossAI : MonoBehaviour
                 yield return new WaitForSeconds(currentShootSpeed);
             }
 
-            
+            yield return null;
+        }
+    }
+
+    private IEnumerator BasicGo()
+    {
+        while (true)
+        {
+            Instantiate(snowBall, shootingSpotLeft.transform.position, Quaternion.identity);
+            Instantiate(snowBall, shootingSpotRight.transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(currentShootSpeed);
         }
     }
 
