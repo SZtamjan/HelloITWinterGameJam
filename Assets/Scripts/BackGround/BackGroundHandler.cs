@@ -13,8 +13,9 @@ public class BackGroundHandler : MonoBehaviour
 
     [SerializeField] private Vector2 spawnPos = new Vector2();
     [SerializeField] private float spawnTimingOne = 4.55f;
-    [SerializeField] private float spawnTimingTwo = 5f;
+    [SerializeField] private float spawnTimingTwo = 4.55f;
     private float currentSpawnTiming = 1f;
+    private bool change = false;
     
     //OUT OF USE
     private Quaternion startPos = new Quaternion();
@@ -45,7 +46,15 @@ public class BackGroundHandler : MonoBehaviour
             if (time > currentSpawnTiming)
             {
                 Instantiate(currentBG, spawnPos, Quaternion.identity);
+
+                if (change)
+                {
+                    currentSpawnTiming = spawnTimingTwo;
+                    change = false;
+                }
+                
                 time = 0f;
+                
             }
 
             time += Time.deltaTime;
@@ -56,7 +65,7 @@ public class BackGroundHandler : MonoBehaviour
 
     public void SwitchBGToBullet()
     {
-        currentSpawnTiming = spawnTimingTwo;
+        change = true;
         currentBG = bgnoc;
         spawnPos = new Vector2(spawnPos.x, spawnPos.y + 4.67462f);
 

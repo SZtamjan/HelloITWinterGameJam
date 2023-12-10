@@ -45,7 +45,6 @@ public class PlayerMover : MonoBehaviour
             playerRB.velocity = new Vector2(50f * playerMovement.x * playerSpeed * Time.deltaTime, 50f * playerMovement.y * playerSpeed * Time.deltaTime);
             Vector2 clampedPos = new Vector2();
             clampedPos.x = Mathf.Clamp(transform.position.x, SSleftPoint.position.x, SSrightPoint.position.x);
-            //clampedPos.x = Mathf.Clamp(transform.position.x, leftPoint.x, rightPoint.x);
             clampedPos.y = -2.5f;
             transform.position = clampedPos;
         }
