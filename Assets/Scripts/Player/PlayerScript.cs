@@ -163,7 +163,7 @@ public class PlayerScript : MonoBehaviour
     
     public void Die()
     {
-        GameManager.Instance.ChangeStateTo(GameState.EndGame);
+        GameManager.Instance.ChangeStateTo(GameState.EndGameLose);
         
         Destroy(gameObject);
     }

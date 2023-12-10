@@ -18,6 +18,7 @@ public class UIController : MonoBehaviour
     
     [SerializeField] private TextMeshProUGUI scoreTMPro;
     [SerializeField] private TextMeshProUGUI distanceTMPro;
+    [SerializeField] private TextMeshProUGUI winScreenPoints;
 
     private void Awake()
     {
@@ -34,6 +35,11 @@ public class UIController : MonoBehaviour
         distanceTMPro.text = "Distance left " + value;
     }
 
+    public void UpdateWinScreenPoints(int value)
+    {
+        winScreenPoints.text = "Your points " + value;
+    }
+    
     public void ShowInGameMenu()
     {
         inGameMenu.SetActive(true);
@@ -42,8 +48,7 @@ public class UIController : MonoBehaviour
         ClearAnims();
         PlayAnim();
     }
-    
-    
+
     private void Update()
     {
         if (inGameMenuOn)

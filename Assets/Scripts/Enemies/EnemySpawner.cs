@@ -66,6 +66,7 @@ public class EnemySpawner : MonoBehaviour
         minBounds = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         maxBounds = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
         mid = Camera.main.ViewportToWorldPoint(new Vector2(0.5f, 1));
+        mid.y = mid.y + 2f;
     }
 
     private void InitSpawnArea()
@@ -184,7 +185,6 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
-                mid.y = mid.y + 2f;
                 Transform newDestanation = destanations[Random.Range(0,destanations.Count)];
                 
                 GameObject newEnemy = Instantiate(enemyTwoPrefab, mid, Quaternion.identity);

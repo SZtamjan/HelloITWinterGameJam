@@ -1,15 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    
     //Vars
+    private GameState currentlyInState;
     private GameObject _playerObj;
     private UIController _uiController;
+    [SerializeField] private GameObject winScreen;
     [SerializeField] private GameEvent deathEvent;
     
     [Header("SpaceShooter part")]
@@ -82,6 +86,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.SpaceShooter:
                 SpaceShooterStartSpawningEnemies();
+                StartBackground();
                 CheckIfRoadComplete();
                 break;
             case GameState.ChangeGameType:
@@ -95,9 +100,13 @@ public class GameManager : MonoBehaviour
             case GameState.StartWave:
                 StartSpawningEnemies();
                 break;
-            case GameState.EndGame:
+            case GameState.EndGameLose:
                 StopEverything();
                 ShowDeathScreen();
+                break;
+            case GameState.EndGameWin:
+                StopEverything();
+                ShowWinScreen();
                 break;
         }
     }
@@ -177,9 +186,15 @@ public class GameManager : MonoBehaviour
 
     private void ChangeBackground()
     {
-        StartCoroutine(GetComponent<BackGroundHandler>().RotateBackground());
+        //StartCoroutine(GetComponent<BackGroundHandler>().RotateBackground());
+        GetComponent<BackGroundHandler>().SwitchBGToBullet();
     }
 
+    private void StartBackground()
+    {
+        GetComponent<BackGroundHandler>().StartVerticalMove();
+    }
+    
     #endregion
     
     #region LoadWave
@@ -216,15 +231,25 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    #region EndGame
+
+    private void ShowWinScreen()
+    {
+        winScreen.SetActive(true);
+        _uiController.UpdateWinScreenPoints(points);
+    }
+    
+    public void ShowDeathScreen()
+    {
+        _uiController.ShowInGameMenu();
+    }
+
+    #endregion
     
     private void StopEverything()
     {
         deathEvent.Raise();
-    }
-
-    public void ShowDeathScreen()
-    {
-        _uiController.ShowInGameMenu();
     }
     
     public void AddPoint()
@@ -240,7 +265,16 @@ public class GameManager : MonoBehaviour
 
     public void ChangeStateTo(GameState newState)
     {
-        ChangeGameState(newState);
+        if (currentlyInState == GameState.EndGameWin && newState == GameState.EndGameLose)
+        {
+            
+        }
+        else
+        {
+            ChangeGameState(newState);
+            currentlyInState = newState;
+        }
+        
     }
     
 }
@@ -252,5 +286,6 @@ public enum GameState
     ChangeGameType,
     LoadNextWave,
     StartWave,
-    EndGame
+    EndGameLose,
+    EndGameWin
 }
