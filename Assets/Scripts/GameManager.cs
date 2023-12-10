@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.SpaceShooter:
                 SpaceShooterStartSpawningEnemies();
+                StartBackground();
                 CheckIfRoadComplete();
                 break;
             case GameState.ChangeGameType:
@@ -177,9 +178,15 @@ public class GameManager : MonoBehaviour
 
     private void ChangeBackground()
     {
-        StartCoroutine(GetComponent<BackGroundHandler>().RotateBackground());
+        //StartCoroutine(GetComponent<BackGroundHandler>().RotateBackground());
+        GetComponent<BackGroundHandler>().SwitchBGToBullet();
     }
 
+    private void StartBackground()
+    {
+        GetComponent<BackGroundHandler>().StartVerticalMove();
+    }
+    
     #endregion
     
     #region LoadWave
