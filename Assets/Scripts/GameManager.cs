@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -236,6 +237,7 @@ public class GameManager : MonoBehaviour
     private void ShowWinScreen()
     {
         winScreen.SetActive(true);
+        _uiController.UpdateWinScreenPoints(points);
     }
     
     public void ShowDeathScreen()
