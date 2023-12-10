@@ -22,14 +22,8 @@ public class GameManager : MonoBehaviour
     //dynamic vars
     private bool spaceShooterMode = true;
     private bool upgradeOne, upgradeTwo, upgradeThree;
-
-    [Header("Player Upgrades")] 
-    [SerializeField] private int unLockFirstAt = 0;
-    [SerializeField] private int unLockSecondAt = 0;
-    [SerializeField] private int unLockThreeAt = 0;
     
-    //Score
-    private int points;
+    //properties
     public int pointsProperty
     {
         get
@@ -55,6 +49,23 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public bool GetIsInSpaceShooter
+    {
+        get
+        {
+            return spaceShooterMode;
+        }
+    }
+
+    [Header("Player Upgrades")] 
+    [SerializeField] private int unLockFirstAt = 0;
+    [SerializeField] private int unLockSecondAt = 0;
+    [SerializeField] private int unLockThreeAt = 0;
+    
+    //Score
+    private int points;
+    
     
     
     //Waves
@@ -163,9 +174,8 @@ public class GameManager : MonoBehaviour
 
             if (endSpaceShooterAfterRoad <= 0)
             {
-                ChangeStateTo(GameState.ChangeGameType);
-                
                 spaceShooterMode = false;
+                ChangeStateTo(GameState.ChangeGameType);
             }
         }
     }
@@ -266,6 +276,9 @@ public class GameManager : MonoBehaviour
     public void ChangeStateTo(GameState newState)
     {
         if (currentlyInState == GameState.EndGameWin && newState == GameState.EndGameLose)
+        {
+            
+        }else if (currentlyInState == GameState.EndGameLose && newState == GameState.EndGameWin)
         {
             
         }

@@ -191,9 +191,8 @@ public class BossAI : MonoBehaviour
 
     private void Die()
     {
-        GameManager.Instance.ChangeStateTo(GameState.EndGameWin);
-        
         GameManager.Instance.AddPoints(1000);
+        GameManager.Instance.ChangeStateTo(GameState.EndGameWin);
         Destroy(gameObject);
     }
 }
