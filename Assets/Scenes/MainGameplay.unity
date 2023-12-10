@@ -886,7 +886,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 949990657661654670, guid: c2c7219412f63cd49b5e1667db5cd2cd, type: 2}
-  m_audioClip: {fileID: 8300000, guid: ac73c11d756dafb4f8d2445e09665d2d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: daf2a1f58d456824a8f9dc82ea5bd58b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1325,12 +1325,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8750d7238ed48db42b0118d480b39cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceShooterEnemySpawnCooldown: 1
+  spaceShooterEnemySpawnCooldown: 0.8
   duringSpaceShooter: 1
   leftBound: {fileID: 183065979}
   rightBound: {fileID: 455226277}
   enemyPrefab: {fileID: 3290783260695920143, guid: fd9ebdebedaf6da458d933d9d86648bc, type: 3}
-  enemyTwoPrefab: {fileID: 8555150018099726377, guid: 02ab1dd2ee9b2494590690f4b3538c6b, type: 3}
+  enemyTwoPrefab: {fileID: 3290783260695920143, guid: fd9ebdebedaf6da458d933d9d86648bc, type: 3}
   bossPrefab: {fileID: 3038343116117477033, guid: 9ee3402492931ae4faed0a371188e120, type: 3}
   destanationsTransform: {fileID: 5207693100288081547, guid: 8c1cb673294cbf64a808db051c146c85, type: 3}
   breakBetweenWaves: 1
@@ -1351,13 +1351,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEvent: {fileID: 11400000, guid: 1da3513d862780746b671a7ddbda4477, type: 2}
-  endSpaceShooterAfterRoad: 50
-  unLockFirstAt: 10
-  unLockSecondAt: 30
-  unLockThreeAt: 60
+  endSpaceShooterAfterRoad: 150
+  unLockFirstAt: 200
+  unLockSecondAt: 750
+  unLockThreeAt: 1200
   waves:
-  - amountOfEnemies: 0
+  - amountOfEnemies: 10
     spawnCooldown: 0.5
+    bossWave: 0
+  - amountOfEnemies: 30
+    spawnCooldown: 0.5
+    bossWave: 0
+  - amountOfEnemies: 25
+    spawnCooldown: 0.3
     bossWave: 0
   - amountOfEnemies: 1
     spawnCooldown: 1
