@@ -176,6 +176,7 @@ public class GameManager : MonoBehaviour
             {
                 spaceShooterMode = false;
                 ChangeStateTo(GameState.ChangeGameType);
+                _uiController.TurnOffDistanceLeft();
             }
         }
     }

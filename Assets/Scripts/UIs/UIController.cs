@@ -35,6 +35,11 @@ public class UIController : MonoBehaviour
         distanceTMPro.text = "Distance left " + value;
     }
 
+    public void TurnOffDistanceLeft()
+    {
+        distanceTMPro.gameObject.SetActive(false);
+    }
+    
     public void UpdateWinScreenPoints(int value)
     {
         winScreenPoints.text = "Your points " + value;
