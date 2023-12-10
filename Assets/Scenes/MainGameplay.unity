@@ -1514,7 +1514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8750d7238ed48db42b0118d480b39cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceShooterEnemySpawnCooldown: 0.8
+  spaceShooterEnemySpawnCooldown: 0.4
   duringSpaceShooter: 1
   leftBound: {fileID: 183065979}
   rightBound: {fileID: 455226277}
@@ -1543,8 +1543,8 @@ MonoBehaviour:
   deathEvent: {fileID: 11400000, guid: 1da3513d862780746b671a7ddbda4477, type: 2}
   endSpaceShooterAfterRoad: 180
   unLockFirstAt: 200
-  unLockSecondAt: 750
-  unLockThreeAt: 1100
+  unLockSecondAt: 900
+  unLockThreeAt: 1200
   waves:
   - amountOfEnemies: 10
     spawnCooldown: 0.5

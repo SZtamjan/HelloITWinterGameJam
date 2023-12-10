@@ -28,7 +28,6 @@ public class BulletScript : MonoBehaviour
             KillMe();
         }
         
-        Debug.Log("bullet read: " + isInSS);
         if (isInSS)
         {
             if (transform.position.x < leftClamp.transform.position.x+0.2f)

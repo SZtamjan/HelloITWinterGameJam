@@ -47,20 +47,17 @@ public class PlayerScript : MonoBehaviour
         {
             if (upgradeLvl == 0)
             {
-                Debug.Log("Upgrade default");
                 playerGunCoolDown = basePlayerGunCoolDown;
                 ShootFromSpotOne();
             }
             else if (upgradeLvl == 1)
             {
-                Debug.Log("Upgrade 1");
                 playerGunCoolDown = basePlayerGunCoolDown;
                 ShootFromSpotOne();
                 ShootFromSpotTwo();
             }
             else if (upgradeLvl == 2)
             {
-                Debug.Log("Upgrade 2");
                 playerGunCoolDown = basePlayerGunCoolDown;
                 ShootFromSpotOne();
                 ShootFromSpotTwo();

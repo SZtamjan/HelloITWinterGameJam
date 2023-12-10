@@ -276,18 +276,18 @@ public class GameManager : MonoBehaviour
 
     public void ChangeStateTo(GameState newState)
     {
-        if (currentlyInState == GameState.EndGameWin && newState == GameState.EndGameLose)
-        {
-            
-        }else if (currentlyInState == GameState.EndGameLose && newState == GameState.EndGameWin)
-        {
-            
-        }
-        else
-        {
+        // if (currentlyInState == GameState.EndGameWin && newState == GameState.EndGameLose)
+        // {
+        //     
+        // }else if (currentlyInState == GameState.EndGameLose && newState == GameState.EndGameWin)
+        // {
+        //     
+        // }
+        // else
+        // {
             ChangeGameState(newState);
             currentlyInState = newState;
-        }
+        //}
         
     }
     

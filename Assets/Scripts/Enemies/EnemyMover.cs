@@ -34,7 +34,7 @@ public class EnemyMover : MonoBehaviour
         {
             destanation = newDestanation;
             goThere = destanationOne.position;
-            enemyStats.moveSpeed = enemyStats.moveSpeed * 6f;
+            enemyStats.moveSpeed = enemyStats.moveSpeed * 4f;
             StartCoroutine(MoveTowardsDestanation());
         }
         else
@@ -44,6 +44,11 @@ public class EnemyMover : MonoBehaviour
         }
         
     }
+
+    // private void Update()
+    // {
+    //     if (transform.position.y < -20f) Destroy(gameObject);
+    // }
 
     private IEnumerator MoveTowardsDestanation()
     {
@@ -79,6 +84,7 @@ public class EnemyMover : MonoBehaviour
                 
                 goThere = destanationOne.position;
                 transform.position = Vector2.MoveTowards(transform.position,goThere,enemyStats.moveSpeed * Time.deltaTime);
+                if(transform.position.y < - 10f) EnemyDie();
             }
             else
             {
