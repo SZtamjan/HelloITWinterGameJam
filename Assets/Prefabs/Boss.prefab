@@ -67,10 +67,10 @@ MonoBehaviour:
   - activatesAtHP: 80
     shortenShootSpeedBy: 0
     activated: 0
-  - activatesAtHP: 50
+  - activatesAtHP: 60
     shortenShootSpeedBy: 0
     activated: 0
-  - activatesAtHP: 20
+  - activatesAtHP: 30
     shortenShootSpeedBy: 0
     activated: 0
 --- !u!212 &4701500215776250313
