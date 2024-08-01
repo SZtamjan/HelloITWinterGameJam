@@ -18,7 +18,7 @@ public class MoveOjbDown : MonoBehaviour
     }
 
 
-    private void KillMe()
+    public void KillMe()
     {
         Destroy(gameObject);
     }

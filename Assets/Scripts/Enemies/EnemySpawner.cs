@@ -104,6 +104,9 @@ public class EnemySpawner : MonoBehaviour
 
         //logic
         
+        //spawn boss
+        if(bossWave) SpawnBoss();
+        
         //spawn enemies
         while (amountOfEnemies > spawnedAmountOfEnemies)
         {
@@ -113,9 +116,6 @@ public class EnemySpawner : MonoBehaviour
             spawnedAmountOfEnemies++;
             yield return new WaitForSeconds(spawnCooldown);
         }
-        
-        //spawn boss
-        if(bossWave) SpawnBoss();
 
         //Hold wave until enemies die
         do

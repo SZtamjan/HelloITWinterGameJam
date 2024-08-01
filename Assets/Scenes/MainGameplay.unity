@@ -969,7 +969,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: ac9fc92d2abe39b4abd713849b497e65, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f2e6a73988066845a7ddc0e57ee5bd8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1555,8 +1555,8 @@ MonoBehaviour:
   - amountOfEnemies: 25
     spawnCooldown: 0.3
     bossWave: 0
-  - amountOfEnemies: 1
-    spawnCooldown: 1
+  - amountOfEnemies: 100
+    spawnCooldown: 0.5
     bossWave: 1
 --- !u!114 &576475754
 MonoBehaviour:

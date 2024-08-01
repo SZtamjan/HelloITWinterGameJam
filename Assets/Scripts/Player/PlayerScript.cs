@@ -173,6 +173,7 @@ public class PlayerScript : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Candy"))
         {
+            other.gameObject.GetComponent<MoveOjbDown>().KillMe();
             GetOneDmg();
             GetOneDmg();
         }
